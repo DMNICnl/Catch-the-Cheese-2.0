@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="RGB.css">
+    <link rel="icon" type="imgs/Cheese-PNG-Pic-Background.png" sizes="16x16">
+
+    
+    <title>Catch the cheese!</title>
+
+
+</head>
+<body>
+      
+<div>
+    <h1 id="catch">Catch the cheese!</h1>
+    <p id="paragraf"></p>
+    <h2 id="score">Score:0</h2>   
+
+    <div id="timer">00:00</div> 
+    <h2 id="info">When all the cheese is eaten just refresh the game and there will be new cheese to eat!</h2>
+</div>
+<div >
+    <img id="balletje"src="imgs/heidrich.png" alt="image">
+</div>
+    
+<script>
+    let score = 0;
+    let speed = 2;
+    let posY = screen.height / 2 -100;
+    let posX = screen.width / 2 -50;
+    let direction ="stop"
+    const balletje = document.getElementById("balletje");
+    const scoreDisplay = document.getElementById("score");
+//////////////////////////example arrays////////////////////////
+
+
+    let name1 = "Nicolle";
+    let name2 = "Jan";
+    let name3 = "Arie";
+
+    let names= ["Nicolle", "Jan", "Arie"];
+    
+    names[0] = "Concatenate";
+
+  console.log(screen.width,screen.height)
+
+/////////////////////////////end example arrays////////////////
+
+/////////////////////functions////////////////
+let timer
+let ele = document.getElementById("timer");
+
+(function(){
+var sec = 0;
+timer = setInterval(()=>{
+ele.textContent = "00:"+sec;
+sec++;
+
+}, 1000)
+
+})()
+
+const images = ["imgs/heidrich.png", "imgs/heidrich2.png"]; // List of image filenames
+        const imageElement = document.getElementById("balletje");
+        let currentIndex = 0;
+
+        function changeImage() {
+            currentIndex = (currentIndex + 1) % images.length; // Loop through the images
+            imageElement.src = images[currentIndex]; // Change the image source
+        }
+
+        // Set an interval to change the image every 2 seconds (adjust as needed)
+        setInterval(changeImage, 700);
+
+
+
+
+
+
+
+function createFood(fCount){
+    for( let i = 0; i < fCount; i++ ){
+        let food = document.createElement("div");
+        food.classList.add("food");
+
+
+function checkCollisions() {
+
+    const birdRect = balletje.getBoundingClientRect();
+  
+    const cheeses = document.querySelectorAll(".food");
+
+    cheeses.forEach((cheese) => {
+      
+        const cheeseRect = cheese.getBoundingClientRect();
+    
+
+       
+        if (
+            birdRect.left < cheeseRect.right &&
+            birdRect.right > cheeseRect.left &&
+            birdRect.top < cheeseRect.bottom &&
+            birdRect.bottom > cheeseRect.top
+        ) {
+           
+            
+            cheese.style.display = "none";
+            score += 1;
+            scoreDisplay.textContent ="score: " + score;
+            if(score ==10)
+            {
+                setTimeout(function() {
+                    alert("Game over!");
+                    location.reload();
+                }, 1000);
+
+            
+            }
+        }
+    });
+}
+
+
+setInterval(function () {
+  
+    checkCollisions();
+}, 10);
+
+
+        let foodImage = document.createElement("img");
+        foodImage.src = "imgs/Cheese-PNG-Pic-Background.png";
+        foodImage.width = 40;
+        foodImage.height = 40; 
+        food.appendChild(foodImage);
+
+
+
+        
+        document.body.appendChild(food);
+        food.style.top = (Math.floor(Math.random() * 500) + 1 )+ "px";
+        food.style.left = (Math.floor(Math.random() * 900) + 1 )+ "px";
+        food.style.bottom = (Math.floor(Math.random() * 400) + 1 )+ "px";
+    }
+
+}
+setInterval(function(){
+switch(direction)
+{
+    case "up":
+        posY = posY - speed;
+    break;
+    case "down":
+        posY = posY + speed;
+    break;
+    case "left":
+        posX = posX - speed;
+    break;    
+    case "right":
+        posX = posX + speed;
+    break;
+    default:
+
+}
+    if(posX < 0 - 100)
+    {
+         posX =screen.width;
+         posY -= 20;
+    }
+    if(posX > screen.width )
+    {
+         posX= -100;
+        posY += 20;
+    }
+    if(posY < 0) posY = 0;
+    if(posY > 500) posY = 500;
+    
+    balletje.style.top = posY + "px";
+    balletje.style.left = posX + "px";
+},10);
+ 
+
+
+////////////////////////end functions////////////////////////
+
+createFood(10) ;
+    
+   
+
+    document.addEventListener("keydown", function(e) 
+    {
+        if (e.key == "ArrowUp") 
+    {
+
+       direction ="up";
+   
+
+    } else if (e.key == "ArrowDown") 
+    {
+        direction ="down";
+    } else if (e.key == "ArrowLeft") 
+    {
+        direction ="left";
+        balletje.style.transform ="rotateY(0deg)";
+
+    } else if (e.key == "ArrowRight") 
+    {
+        
+        direction ="right";
+        balletje.style.transform ="rotateY(180deg)";
+    }
+
+    });
+    
+  
+
+
+
+
+</script>
+
+</body>
+</html>
